@@ -17,8 +17,9 @@ mongoose
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/psikolog", require("./psikologRoute/psikologAction"));
-
+app.use("/user", require("./userRoute/index"));
 /// localhost:3000/psikolog/addPsikolog
+/// localhost:3000/user/register
 
 app.get("/", (req, res) => {
   res.send("hello world");
