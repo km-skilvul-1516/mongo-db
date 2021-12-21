@@ -55,10 +55,6 @@ router.post("/login", (req, res) => {
       }
     }
   });
-
-  res.json({
-    msg: "ini dari login",
-  });
 });
 
 module.exports = router;

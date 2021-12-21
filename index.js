@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const mongoose = require("mongoose");
+const cors = require("cors");
 require("dotenv").config();
 
 mongoose
@@ -14,10 +15,12 @@ mongoose
   })
   .catch((err) => console.log(err));
 
+app.use(cors({ credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/psikolog", require("./psikologRoute/psikologAction"));
 app.use("/user", require("./userRoute/index"));
+app.use("/home", require("./homeRoute/home"));
 /// localhost:3000/psikolog/addPsikolog
 /// localhost:3000/user/register
 

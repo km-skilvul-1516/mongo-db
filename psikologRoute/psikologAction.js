@@ -2,9 +2,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const psikologSchema = require("../schema/psikologSchema");
 const router = express.Router();
+const cors = require("cors");
 
 //create psikolog
-router.post("/addPsikolog", (req, res) => {
+router.post("/addPsikolog", cors(), (req, res) => {
   const payload = {
     email: req.body.email,
     password: req.body.password,
