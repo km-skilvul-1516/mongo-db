@@ -29,5 +29,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(process.env.port || 3000, "0.0.0.0", () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`sukses`);
 });
