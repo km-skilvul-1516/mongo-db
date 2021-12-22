@@ -22,12 +22,13 @@ app.use("/psikolog", require("./psikologRoute/psikologAction"));
 app.use("/user", require("./userRoute/index"));
 app.use("/home", require("./homeRoute/home"));
 /// localhost:3000/psikolog/addPsikolog
+/// https://gocure.herokuapp.com/psikolog/addPsikolog
 /// localhost:3000/user/register
 
 app.get("/", (req, res) => {
   res.send("hello world");
 });
 
-app.listen(port, () => {
+app.listen(port || 3000, "0.0.0.0", () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
