@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const port = 3000;
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
@@ -29,6 +28,6 @@ app.get("/", (req, res) => {
   res.send("hello world");
 });
 
-app.listen(port || 3000, "0.0.0.0", () => {
+app.listen(process.env.port || 3000, "0.0.0.0", () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
