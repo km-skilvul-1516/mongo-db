@@ -2,30 +2,46 @@ const express = require("express");
 const mongoose = require("mongoose");
 const homeSchema = require("../schema/homeSchema");
 const userSchema = require("../schema/userSchema");
+const cloudinary = require("../conf/cloudinary");
+const multer = require("../conf/multer");
 const cors = require("cors");
 const router = express.Router();
 
-router.post("/createRumah", cors(), (req, res) => {
-  const home = new homeSchema();
-  home.warnaRumah = req.body.warna;
-  home.nomerRumah = req.body.nomer;
-  home.alamatRumah = req.body.alamatRumah;
-  home.anggotaRumah = req.body.anggotaRumah;
-  home.jumlahLike = 0;
+//multer berguna untuk mindahin file
+router.post(
+  "/createRumah",
+  multer.single("gambarRumah"),
+  cors(),
+  (req, res) => {
+    //proses upload gambar
+    let upload = cloudinary.uploader.upload(req.file.path);
 
-  return home.save((err, result) => {
-    if (err) {
-      res.json({
-        msg: "data gagal dimasukan",
+    //kalo upload udah beres
+    upload.then((resultUpload) => {
+      const home = new homeSchema();
+      home.warnaRumah = req.body.warna;
+      home.nomerRumah = req.body.nomer;
+      home.alamatRumah = req.body.alamatRumah;
+      home.anggotaRumah = req.body.anggotaRumah;
+      home.homeGambar = resultUpload.secure_url;
+      home.cloudinaryId = resultUpload.public_id;
+      home.jumlahLike = 0;
+
+      return home.save((err, result) => {
+        if (err) {
+          res.json({
+            msg: "data gagal dimasukan",
+          });
+        } else {
+          res.json({
+            msg: "rumah berhasil dibuat",
+            result,
+          });
+        }
       });
-    } else {
-      res.json({
-        msg: "rumah berhasil dibuat",
-        result,
-      });
-    }
-  });
-});
+    });
+  }
+);
 
 router.get("/getAllHome", cors(), (req, res) => {
   return homeSchema.find({}, (err, result) => {
