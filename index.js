@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+//import ini
 const cors = require("cors");
 require("dotenv").config();
 
@@ -14,6 +15,7 @@ mongoose
   })
   .catch((err) => console.log(err));
 
+//nambah ini
 app.use(cors({ credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
