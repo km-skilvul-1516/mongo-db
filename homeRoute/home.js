@@ -43,7 +43,7 @@ router.post(
   }
 );
 
-router.get("/getAllHome", cors(), (req, res) => {
+router.get("/getAllHome", (req, res) => {
   return homeSchema.find({}, (err, result) => {
     if (err) {
       res.sendStatus(404);
