@@ -5,6 +5,7 @@ const userSchema = require("../schema/userSchema");
 const bcrypt = require("bcrypt");
 const salt = bcrypt.genSaltSync(10);
 const jwt = require("jsonwebtoken");
+const cors = require("cors");
 
 router.post("/register", (req, res) => {
   const encryptedPassword = bcrypt.hashSync(req.body.password, salt);
@@ -26,11 +27,13 @@ router.post("/register", (req, res) => {
   });
 });
 
-router.post("/login", (req, res) => {
+router.post("/login", cors(), (req, res) => {
   payload = {
     username: req.body.username,
     password: req.body.password,
   };
+
+  console.log(payload);
 
   return userSchema.findOne({ username: payload.username }, (err, result) => {
     if (err) {
