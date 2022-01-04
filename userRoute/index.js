@@ -37,9 +37,7 @@ router.post("/login", cors(), (req, res) => {
 
   return userSchema.findOne({ username: payload.username }, (err, result) => {
     if (err) {
-      res.json({
-        msg: "salah emails",
-      });
+      res.sendStatus(404);
     } else {
       if (bcrypt.compareSync(req.body.password, result.password)) {
         jwt.sign({ payload }, "luthfi", (err, token) => {
