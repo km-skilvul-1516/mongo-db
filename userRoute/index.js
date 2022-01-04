@@ -12,6 +12,7 @@ router.post("/register", (req, res) => {
   const userModel = new userSchema();
   userModel.username = req.body.username;
   userModel.password = encryptedPassword;
+  userModel.role = req.body.role;
 
   return userModel.save((err, data) => {
     if (err) {
