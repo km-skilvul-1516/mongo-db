@@ -50,9 +50,7 @@ router.post("/login", cors(), (req, res) => {
           }
         });
       } else {
-        res.json({
-          msg: "salah password",
-        });
+        res.sendStatus(404);
       }
     }
   });
