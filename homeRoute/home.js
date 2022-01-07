@@ -4,6 +4,7 @@ const homeSchema = require("../schema/homeSchema");
 const userSchema = require("../schema/userSchema");
 const cloudinary = require("../conf/cloudinary");
 const multer = require("../conf/multer");
+const midtransClient = require("midtrans-client");
 const cors = require("cors");
 const router = express.Router();
 
@@ -154,6 +155,34 @@ router.post("/likeRumah", cors(), (req, res) => {
   );
 });
 
+router.post("/beliRumah", cors(), (req, res) => {
+  let core = new midtransClient.CoreApi({
+    isProduction: false,
+    serverKey: "SB-Mid-server-U_Cs4FzGFbmg8CiDN8z8wNSm",
+    clientKey: "SB-Mid-client-ojL0cqT7l0rf0de9",
+  });
+
+  let parameter = {
+    payment_type: "gopay",
+    transaction_details: {
+      gross_amount: 500, // harga dari yang dibayar sama user, ngikutin harga paket / apapun yang kalian tentuin
+      order_id: "luthfi-1-asdasdhsadh21313", //selalu diganti biar ga tabrakan ( dinamis )
+    },
+    gopay: {
+      enable_callback: true, // optional kalo mau di redirect sesudahnya
+      callback_url: "https://store.steampowered.com/", // optional halaman tujuan sesudah di redirect
+    },
+  };
+
+  // charge transaction
+  core.charge(parameter).then((chargeResponse) => {
+    if (chargeResponse) {
+      res.send(chargeResponse);
+    } else {
+      res.send(404);
+    }
+  });
+});
 // router.post('/getById', (req, res) => {
 //   return homeSchema.findOne({_id: req.body.id})
 // })
